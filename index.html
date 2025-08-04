@@ -219,7 +219,7 @@
         <section id="contact" class="page-content space-y-8">
             <h1 class="text-4xl font-bold text-center text-rose-500">Contact Us</h1>
             <div class="bg-white p-8 rounded-xl shadow-md max-w-2xl mx-auto">
-                <form class="space-y-4">
+                <form id="contactForm" class="space-y-4">
                     <div>
                         <label for="name" class="block text-lg font-medium text-gray-700">Name</label>
                         <input type="text" id="name" name="name" class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-rose-500 focus:border-rose-500" required>
@@ -233,8 +233,9 @@
                         <textarea id="message" name="message" rows="4" class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-rose-500 focus:border-rose-500" required></textarea>
                     </div>
                     <div>
-                        <button type="submit" class="w-full bg-rose-500 text-white font-bold py-3 px-6 rounded-xl hover:bg-rose-600 transition-colors duration-300 shadow-md">Send Message</button>
+                        <button type="submit" id="submitBtn" class="w-full bg-rose-500 text-white font-bold py-3 px-6 rounded-xl hover:bg-rose-600 transition-colors duration-300 shadow-md">Send Message</button>
                     </div>
+                    <div id="formMessage" class="hidden mt-4 p-4 rounded-md"></div>
                 </form>
             </div>
         </section>
@@ -246,7 +247,7 @@
         <p>&copy; 2025 Daisy Daze. All rights reserved.</p>
     </footer>
 
-    <!-- JavaScript for page navigation -->
+    <!-- JavaScript for page navigation and form handling -->
     <script>
         /**
          * @param {string} pageId The ID of the page section to display.
@@ -274,6 +275,81 @@
             // Scroll to top of the page
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
+        
+        // Contact form handling
+        document.addEventListener('DOMContentLoaded', function() {
+            const contactForm = document.getElementById('contactForm');
+            const submitBtn = document.getElementById('submitBtn');
+            const formMessage = document.getElementById('formMessage');
+            
+            if (contactForm) {
+                contactForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    // Get form data
+                    const formData = new FormData(contactForm);
+                    const name = formData.get('name');
+                    const email = formData.get('email');
+                    const message = formData.get('message');
+                    
+                    // Show loading state
+                    submitBtn.textContent = 'Sending...';
+                    submitBtn.disabled = true;
+                    
+                    // Prepare email content
+                    const emailContent = {
+                        to: 'shreyamishr1807@gmail.com',
+                        subject: 'New Contact Form Submission - Daisy Daze Flower Shop',
+                        body: `
+Name: ${name}
+Email: ${email}
+Message: ${message}
+
+This message was sent from the Daisy Daze Flower Shop contact form.
+                        `
+                    };
+                    
+                                                              // Use a reliable form submission service
+                     const submitFormData = new FormData();
+                     submitFormData.append('name', name);
+                     submitFormData.append('email', email);
+                     submitFormData.append('message', message);
+                     submitFormData.append('_subject', emailContent.subject);
+                     
+                     fetch('https://formsubmit.co/shreyamishr1807@gmail.com', {
+                         method: 'POST',
+                         body: submitFormData
+                     })
+                     .then(response => {
+                         if (response.ok) {
+                             showMessage('Thank you! Your message has been sent successfully.', 'success');
+                             contactForm.reset();
+                         } else {
+                             throw new Error('Failed to send message');
+                         }
+                     })
+                     .catch(error => {
+                         console.error('Error:', error);
+                         showMessage('Sorry, there was an error sending your message. Please try again.', 'error');
+                     })
+                     .finally(() => {
+                         submitBtn.textContent = 'Send Message';
+                         submitBtn.disabled = false;
+                     });
+                });
+            }
+            
+            function showMessage(message, type) {
+                formMessage.textContent = message;
+                formMessage.className = `mt-4 p-4 rounded-md ${type === 'success' ? 'bg-green-100 text-green-700 border border-green-300' : 'bg-red-100 text-red-700 border border-red-300'}`;
+                formMessage.classList.remove('hidden');
+                
+                // Hide message after 5 seconds
+                setTimeout(() => {
+                    formMessage.classList.add('hidden');
+                }, 5000);
+            }
+        });
         
         // Initially set the 'Home' link as active
         window.onload = () => {
