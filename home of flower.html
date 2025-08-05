@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Petal & Bloom</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: hsl(157, 57%, 30%); /* Light background for contrast */
+            overflow: hidden; /* Hide potential scrollbars if image is slightly larger */
+        }
+        .container {
+            text-align: center;
+            padding: 20px;
+        }
+        h1 {
+            font-size: 4em; /* Larger font size for impact */
+            color: hsl(175, 14%, 18%);
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 4px hwb(350 33% 35% / 0); /* Subtle shadow for depth */
+        }
+        .flower-image {
+            max-width: 90%; /* Adjust as needed, keeps image responsive */
+            height: auto;
+            border-radius: 15px; /* Slightly rounded corners for a softer look */
+            box-shadow: 0 10px 20px rgba(54, 38, 38, 0.15); /* More prominent shadow for a floating effect */
+            transition: transform 0.3s ease-in-out; /* Smooth hover effect */
+        }
+        .flower-image:hover {
+            transform: scale(1.02); /* Slightly enlarge on hover */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Petal & Bloom</h1>
+        <img src="https://via.placeholder.com/1200x800/FFB6C1/FFFFFF?text=Beautiful+Flower+Arrangement" alt="A beautiful, vibrant bouquet of fresh flowers with soft lighting." class="flower-image">
+    </div>
+</body>
+</html>
+
+
+
+
+
+
