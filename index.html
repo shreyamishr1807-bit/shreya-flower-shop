@@ -296,18 +296,18 @@
                     submitBtn.textContent = 'Sending...';
                     submitBtn.disabled = true;
                     
-                    // Use FormSubmit.co service (free and reliable)
-                    const submitFormData = new FormData();
-                    submitFormData.append('name', name);
-                    submitFormData.append('email', email);
-                    submitFormData.append('message', message);
-                    submitFormData.append('_subject', 'New Contact Form Submission - Daisy Daze Flower Shop');
-                    submitFormData.append('_captcha', 'false'); // Disable captcha for better UX
-                    
-                    fetch('https://formsubmit.co/el/confirm/shreyamishr1807@gmail.com', {
-                        method: 'POST',
-                        body: submitFormData
-                    })
+                                         // Use FormSubmit.co service (free and reliable)
+                     const submitFormData = new FormData();
+                     submitFormData.append('name', name);
+                     submitFormData.append('email', email);
+                     submitFormData.append('message', message);
+                     submitFormData.append('_subject', 'New Contact Form Submission - Daisy Daze Flower Shop');
+                     submitFormData.append('_captcha', 'false'); // Disable captcha for better UX
+                     
+                     fetch('https://formsubmit.co/shreyamishr1807@gmail.com', {
+                         method: 'POST',
+                         body: submitFormData
+                     })
                     .then(response => {
                         if (response.ok) {
                             showMessage('Thank you! Your message has been sent successfully.', 'success');
