@@ -267,7 +267,7 @@
             document.querySelectorAll('.nav-link').forEach(link => {
                 link.classList.remove('active');
             });
-            const activeLink = document.querySelector(a[href="#${pageId}"]);
+            const activeLink = document.querySelector(`a[href="#${pageId}"]`);
             if (activeLink) {
                 activeLink.classList.add('active');
             }
@@ -296,46 +296,34 @@
                     submitBtn.textContent = 'Sending...';
                     submitBtn.disabled = true;
                     
-                    // Prepare email content
-                    const emailContent = {
-                        to: 'shreyamishr1807@gmail.com',
-                        subject: 'New Contact Form Submission - Daisy Daze Flower Shop',
-                        body: `
-Name: ${name}
-Email: ${email}
-Message: ${message}
-
-This message was sent from the Daisy Daze Flower Shop contact form.
-                        `
-                    };
+                    // Use FormSubmit.co service (free and reliable)
+                    const submitFormData = new FormData();
+                    submitFormData.append('name', name);
+                    submitFormData.append('email', email);
+                    submitFormData.append('message', message);
+                    submitFormData.append('_subject', 'New Contact Form Submission - Daisy Daze Flower Shop');
+                    submitFormData.append('_captcha', 'false'); // Disable captcha for better UX
                     
-                                                              // Use a reliable form submission service
-                     const submitFormData = new FormData();
-                     submitFormData.append('name', name);
-                     submitFormData.append('email', email);
-                     submitFormData.append('message', message);
-                     submitFormData.append('_subject', emailContent.subject);
-                     
-                     fetch('https://formsubmit.co/shreyamishr1807@gmail.com', {
-                         method: 'POST',
-                         body: submitFormData
-                     })
-                     .then(response => {
-                         if (response.ok) {
-                             showMessage('Thank you! Your message has been sent successfully.', 'success');
-                             contactForm.reset();
-                         } else {
-                             throw new Error('Failed to send message');
-                         }
-                     })
-                     .catch(error => {
-                         console.error('Error:', error);
-                         showMessage('Sorry, there was an error sending your message. Please try again.', 'error');
-                     })
-                     .finally(() => {
-                         submitBtn.textContent = 'Send Message';
-                         submitBtn.disabled = false;
-                     });
+                    fetch('https://formsubmit.co/el/confirm/shreyamishr1807@gmail.com', {
+                        method: 'POST',
+                        body: submitFormData
+                    })
+                    .then(response => {
+                        if (response.ok) {
+                            showMessage('Thank you! Your message has been sent successfully.', 'success');
+                            contactForm.reset();
+                        } else {
+                            throw new Error('Failed to send message');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        showMessage('Sorry, there was an error sending your message. Please try again.', 'error');
+                    })
+                    .finally(() => {
+                        submitBtn.textContent = 'Send Message';
+                        submitBtn.disabled = false;
+                    });
                 });
             }
             
